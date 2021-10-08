@@ -251,7 +251,12 @@ namespace Plugin.BLE.Android
                     records.Add(new AdvertisementRecord(AdvertisementRecordType.ServiceData, result.ScanRecord.ServiceData));
                 }*/
 
-                var device = new Device(_adapter, result.Device, null, result.Rssi, result.ScanRecord.GetBytes());
+                
+                var scanRecordBytes = result.ScanRecord.GetBytes();
+                // add record for isconnectable
+                var isConnectableBytes = new byte[] { 2, (byte)AdvertisementRecordType.IsConnectable, (byte)(result.IsConnectable ? 1 : 0) };
+
+                var device = new Device(_adapter, result.Device, null, result.Rssi, scanRecordBytes.Concat(isConnectableBytes).ToArray());
 
                 //Device device;
                 //if (result.ScanRecord.ManufacturerSpecificData.Size() > 0)
