@@ -126,5 +126,7 @@ namespace Plugin.BLE.Abstractions.Contracts
         /// <param name="services">IMPORTANT: Only considered by iOS due to platform limitations. Filters devices by advertised services. SET THIS VALUE FOR ANY RESULTS</param>
         /// <returns>List of IDevices connected to the OS.  In case of no devices the list is empty.</returns>
         IReadOnlyList<IDevice> GetSystemConnectedOrPairedDevices(Guid[] services = null);
+
+        void CleanupOnBleDisabled();
     }
 }

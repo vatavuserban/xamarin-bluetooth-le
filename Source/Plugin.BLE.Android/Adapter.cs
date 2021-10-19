@@ -277,6 +277,17 @@ namespace Plugin.BLE.Android
 
             }
         }
+
+        protected override void CleanupOnBleDisabledNative()
+        {
+            foreach (Device device in ConnectedDevices)
+            {
+                device.CloseGatt();
+                HandleDisconnectedDevice(false, device);
+            }
+
+            ConnectedDeviceRegistry.Clear();
+        }
     }
 }
 

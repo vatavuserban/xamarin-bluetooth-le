@@ -393,5 +393,7 @@ namespace Plugin.BLE.iOS
 
             return records;
         }
+
+        protected override void CleanupOnBleDisabledNative() { }
     }
 }

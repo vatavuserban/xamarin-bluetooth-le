@@ -27,6 +27,11 @@ namespace Plugin.BLE.Abstractions
                 var oldState = _state;
                 _state = value;
                 StateChanged?.Invoke(this, new BluetoothStateChangedArgs(oldState, _state));
+
+                if (oldState != BluetoothState.Off && _state == BluetoothState.Off)
+                {
+                    Adapter.CleanupOnBleDisabled();
+                }
             }
         }
 

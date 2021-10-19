@@ -46,5 +46,7 @@ namespace Plugin.BLE.Abstractions.Utils
             TraceUnavailability();
             return new List<IDevice>();
         }
+
+        protected override void CleanupOnBleDisabledNative() { }
     }
 }
