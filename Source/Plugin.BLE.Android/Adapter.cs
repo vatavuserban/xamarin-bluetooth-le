@@ -253,10 +253,15 @@ namespace Plugin.BLE.Android
 
                 
                 var scanRecordBytes = result.ScanRecord.GetBytes();
-                // add record for isconnectable
-                var isConnectableBytes = new byte[] { 2, (byte)AdvertisementRecordType.IsConnectable, (byte)(result.IsConnectable ? 1 : 0) };
 
-                var device = new Device(_adapter, result.Device, null, result.Rssi, scanRecordBytes.Concat(isConnectableBytes).ToArray());
+                if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
+                {
+                    // add record for isconnectable
+                    var isConnectableBytes = new byte[] { 2, (byte)AdvertisementRecordType.IsConnectable, (byte)(result.IsConnectable ? 1 : 0) };
+                    scanRecordBytes = scanRecordBytes.Concat(isConnectableBytes).ToArray();
+                }
+
+                var device = new Device(_adapter, result.Device, null, result.Rssi, scanRecordBytes);
 
                 //Device device;
                 //if (result.ScanRecord.ManufacturerSpecificData.Size() > 0)
